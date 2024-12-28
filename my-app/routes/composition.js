@@ -113,7 +113,10 @@ app.post("/process-file", (req, res) => {
 function sendToPython(res){
   console.log('処理は現在 function sendToPython(res)')
   const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
+  console.log(`pythonScriptPathは    ${pythonScriptPath}`)
   const pythonCommand = `python "${pythonScriptPath}" "${uploadedFilePath}"`;
+
+  console.log(`pythonCommand は   ${pythonCommand}`)
   exec(pythonCommand, (error, stdout, stderr) => {
     if (error || stderr) {
       console.error("Pythonエラー:", error? error:stderr);
