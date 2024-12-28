@@ -80,7 +80,7 @@ app.post("/process-file", (req, res) => {
       uploadedFilePath = files.file[0].filepath; // ファイルパスを格納
       sendToPython(res);
     } else {
-      res.status(400).send("ファイルがアップロードされていません");
+      res.status(400).send("ファイルfdsがアップロードされていません");
     }
   });
 
