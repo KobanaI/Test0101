@@ -64,6 +64,8 @@ let uploadedFilePath = "";
 
 ///composition/process-file
 app.post("/process-file", (req, res) => {
+
+  console.log('処理は現在app.post("/process-file"')
   const form = new formidable.IncomingForm();
   form.uploadDir = path.join(__dirname, '../uploads'); // 保存ディレクトリ
   form.keepExtensions = true; // 拡張子を保持
@@ -80,7 +82,7 @@ app.post("/process-file", (req, res) => {
       uploadedFilePath = files.file[0].filepath; // ファイルパスを格納
       sendToPython(res);
     } else {
-      res.status(400).send("ファイルfdsがアップロードされていません");
+      res.status(400).send("ファイルkkkkがアップロードされていません");
     }
   });
 
@@ -88,7 +90,7 @@ app.post("/process-file", (req, res) => {
 
 
 function sendToPython(res){
-  
+  console.log('処理は現在 function sendToPython(res)')
   const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
   const pythonCommand = `python "${pythonScriptPath}" "${uploadedFilePath}"`;
   exec(pythonCommand, (error, stdout, stderr) => {
@@ -106,6 +108,10 @@ function sendToPython(res){
 let fileUrl = "";
 let absolutePath = "";
 app.post("/completeChangeImg", (req,res)=>{
+
+  console.log('処理は現在 app.post("/completeChangeImg", (req,res)=>{')
+
+
   const resolvedPath = path.resolve(req.body.path);
   absolutePath = resolvedPath;
   const basePath = path.join(__dirname,'./'); //ここよくわかっていない
@@ -118,6 +124,7 @@ app.post("/completeChangeImg", (req,res)=>{
 
 ///composition/process-file
 app.get("/process-file", (req, res) => {
+  console.log('処理は現在 app.get("/process-file", (req, res) => {')
   if (!fileUrl) {
     res.status(400).send("画像のデータが消失したため、もう一度やり直してください");
     return;
