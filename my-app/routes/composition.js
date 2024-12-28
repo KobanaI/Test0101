@@ -44,8 +44,9 @@ document.getElementById("form1").addEventListener("submit", async (event) => {
       // アップロードされたファイルの表示ページにリダイレクト
       window.location.href = "/composition/process-file";
     } else {
-      console.error("アップロードに失敗しました");
-      alert("アップロードに失敗しました");
+      const errorData = await response.json(); // エラーレスポンスを取得
+      console.error("アップロードに失敗しました:", errorData);
+      alert(errorData.message);
     }
   } catch (error) {
     console.error("リクエストエラー:", error);
