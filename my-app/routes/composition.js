@@ -43,7 +43,17 @@ document.getElementById("form1").addEventListener("submit", async (event) => {
       // アップロードされたファイルの表示ページにリダイレクト
       window.location.href = "/composition/process-file";
     } else {
-      alert(errorData.message);
+        let errorText = "アップロードに失敗しました";
+      try {
+        const errorData = await response.json(); // もしJSONで返されたら解析
+        errorText = errorData.message;
+      } catch (jsonError) {
+        // JSONではない場合、テキストとして表示
+        errorText = 'アップロードに失敗しましたサーバーからの応答に問題があります';
+      }
+
+      console.error(errorText);
+      alert(errorText);
     }
   } catch (error) {
     console.error("リクエストエラー:", error);
