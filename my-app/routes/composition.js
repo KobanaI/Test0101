@@ -74,12 +74,23 @@ let uploadedFilePath = "";
 app.post("/process-file", (req, res) => {
 
   console.log('処理は現在app.post("/process-file"')
+
+   // uploads ディレクトリが存在しない場合に作成
+   const uploadDir = path.join(__dirname, '../uploads');
+   if (!fs.existsSync(uploadDir)) {
+     fs.mkdirSync(uploadDir, { recursive: true });
+   }
+
+   console.log('処理は現在1')
+
   const form = new formidable.IncomingForm();
   form.uploadDir = path.join(__dirname, '../uploads'); // 保存ディレクトリ
   form.keepExtensions = true; // 拡張子を保持
 
+  console.log('処理は現在2')
   form.parse(req, (err, fields, files) => {
     if (err) {
+      console.log('処理は現在11')
       console.error("ファイルアップロード中のエラー:", err);
       res.status(500).send("ファイルのアップロード中にエラーが発生しました");
       return;
@@ -87,9 +98,11 @@ app.post("/process-file", (req, res) => {
 
     
     if (files.file) {
+      console.log('処理は現在111')
       uploadedFilePath = files.file[0].filepath; // ファイルパスを格納
       sendToPython(res);
     } else {
+      console.log('処理は現在10')
       res.status(400).send("ファイルkkkkがアップロードされていません");
     }
   });
