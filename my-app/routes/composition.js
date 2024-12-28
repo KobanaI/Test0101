@@ -38,14 +38,11 @@ document.getElementById("form1").addEventListener("submit", async (event) => {
     });
 
     if (response.ok) {
-      const data = await response.json();
-      console.log("アップロード成功:", data);
+      console.log("アップロード成功:");
 
       // アップロードされたファイルの表示ページにリダイレクト
       window.location.href = "/composition/process-file";
     } else {
-      const errorData = await response.json(); // エラーレスポンスを取得
-      console.error("アップロードに失敗しました:", errorData);
       alert(errorData.message);
     }
   } catch (error) {
