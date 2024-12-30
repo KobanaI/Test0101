@@ -27,7 +27,7 @@ except Exception as e:
     print("Error:", e)
 
 
-server_url = os.getenv("SERVER_URL", "http://localhost:4000")
+server_url = os.getenv("SERVER_URL", "https://gene11.onrender.com")
 uploaded_file_path = sys.argv[1]
 
 
