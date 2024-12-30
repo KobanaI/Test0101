@@ -1,4 +1,6 @@
 import socket
+import sys,secrets,string,requests,cv2,os
+print("Script started", file=sys.stderr)
 
 def test_connection():
     try:
@@ -13,7 +15,7 @@ test_connection()
 
 
 
-import sys,secrets,string,requests,cv2,os
+
 from pathlib import Path
 
 
