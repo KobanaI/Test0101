@@ -1,6 +1,15 @@
 import sys,secrets,string,requests,cv2,os
 from pathlib import Path
 
+
+
+try:
+    response = requests.get("https://gene11.onrender.com/")
+    print("いやーたいへんですね",response.status_code)
+except Exception as e:
+    print("Error:", e)
+
+
 server_url = os.getenv("SERVER_URL", "http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
