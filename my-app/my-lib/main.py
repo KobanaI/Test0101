@@ -1,3 +1,18 @@
+import socket
+
+def test_connection():
+    try:
+        # GoogleのDNSサーバー(8.8.8.8)に接続できるか確認
+        socket.create_connection(("8.8.8.8", 53), timeout=5)
+        print("Network is reachable.")
+    except OSError as e:
+        print("Network is not reachable:", e)
+
+test_connection()
+
+
+
+
 import sys,secrets,string,requests,cv2,os
 from pathlib import Path
 
