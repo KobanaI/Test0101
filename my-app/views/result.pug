@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1  深刻なエラーが発生しました（ホラーでデジタルなフォントで）
+  if filepath 
+    img(src=filepath, alt="読み込みエラーが発生しました")
+  else
+    h2 画像の処理が失敗しました。サーバー側に問題がある可能性が高いです。
+  
+
