@@ -169,16 +169,16 @@ app.get("/process-file", (req, res) => {
     </html>
   `);
 
-  const deleteDelay = 1000; // 1秒後に削除
-  setTimeout(() => {
-    fs.unlink(absolutePath, (err) => {
-      if (err) {
-        console.error('ファイルの削除に失敗しました:', err);
-      } else {
-        console.log('ファイルが削除されました:', absolutePath);
-      }
-    });
-  }, deleteDelay);
+  // const deleteDelay = 1000; // 1秒後に削除
+  // setTimeout(() => {
+  //   fs.unlink(absolutePath, (err) => {
+  //     if (err) {
+  //       console.error('ファイルの削除に失敗しました:', err);
+  //     } else {
+  //       console.log('ファイルが削除されました:', absolutePath);
+  //     }
+  //   });
+  // }, deleteDelay);
 
 
 });

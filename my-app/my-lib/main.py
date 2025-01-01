@@ -8,7 +8,7 @@ uploaded_file_path = sys.argv[1]
 
 print("ぱいそんにきました2")
 
-def deleteReq():
+def deleteOriginalFile():
   path = Path(uploaded_file_path)
   try:
     path.unlink()
@@ -37,7 +37,7 @@ if uploaded_file_path :
     
     save_path = save_dir / f"{random}.png"
     print('保存パスはこれです', save_path)
-    deleteReq()
+    deleteOriginalFile()
     cv2.imwrite(str(save_path), image_change1)  # 変換した画像を保存
 
 
