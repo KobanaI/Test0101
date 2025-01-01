@@ -1,0 +1,18 @@
+services:
+  # Expressサーバー (Webサービス)
+  - type: web
+    name: express-app
+    env: node
+    buildCommand: |
+      yarn install 
+      npm run install:python-deps 
+    startCommand: |
+      yarn start 
+
+  # Python スクリプト処理 (バックグラウンドワーカー)
+  - type: worker
+    name: python-worker
+    env: python
+    buildCommand: pip install -r my-lib/requirements.txt  # Python の依存関係をインストール
+    startCommand: python my-app/my-lib/main.py  # Python スクリプトを実行
+
