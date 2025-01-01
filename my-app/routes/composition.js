@@ -85,7 +85,7 @@ app.post("/completeChangeImg", (req,res)=>{
 app.get("/displayResults", (req, res) => {
   res.render('result',{filepath:fileUrl})
 
-  const deleteDelay = 10000; // 1秒後に削除
+  const deleteDelay = 60000; // 1秒後に削除
   setTimeout(() => {
 
     fs.access(absolutePath)
