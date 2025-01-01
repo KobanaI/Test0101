@@ -3,7 +3,9 @@ print("ぱいそんにきました")
 import sys,secrets,string,requests,cv2,os
 from pathlib import Path
 
-server_url = os.getenv("SERVER_URL", "https://gene11.onrender.com")
+
+#個々が認識されず、右のほうになっているかも
+server_url = os.getenv("SERVER_URL", "https://test0101-qyyr.onrender.com")
 uploaded_file_path = sys.argv[1]
 
 print("ぱいそんにきました2")
