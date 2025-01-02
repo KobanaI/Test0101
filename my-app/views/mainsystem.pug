@@ -10,6 +10,6 @@ html(lang="en")
       h2 グリッチアート【リンクを張る】が苦手な方はおすすめしません
     form(id="form1", enctype="multipart/form-data", action="/composition/process-file", method="POST")
       input(type="file", name="file", id="fileInput", accept="image/*", required)
-      button(type="submit") Upload
+      button(type="submit",id="uploadButton") Upload
 
     script(src="/javascripts/formHandler.js")

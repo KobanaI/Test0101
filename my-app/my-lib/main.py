@@ -5,7 +5,7 @@ from pathlib import Path
 
 #SERVER_URL認識されない。
 server_url = os.getenv("SERVER_URL")
-#server_url = os.getenv("http://localhost:4000")
+#server_url = os.getenv("http://localhost:4000","http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
 def deleteOriginalFile():
@@ -43,7 +43,7 @@ if uploaded_file_path :
     
     resultImage = addSimply(image)
     #resultImage = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-    random = "dsdasdsaasfaddasdsf"
+    random = "ujyfyu"
 
     app_dir = Path(__file__).resolve().parent.parent 
     save_dir = app_dir / 'complete_images' 

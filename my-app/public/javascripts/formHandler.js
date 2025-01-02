@@ -3,8 +3,9 @@
 
 document.getElementById("form1").addEventListener("submit", async (event) => {
   event.preventDefault();
+  document.getElementById("uploadButton").disabled = true; // ボタンを無効化
   const formData = new FormData(event.target);
-
+ 
   try {
     const response = await fetch("/composition/process-file", {
       method: "POST",
