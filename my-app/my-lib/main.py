@@ -1,11 +1,13 @@
-import sys,secrets,string,requests,cv2,os
+import sys,secrets,string,requests,cv2,os,uuid
 from pathlib import Path
 
 
 
+
+
 #SERVER_URL認識されない。
-server_url = os.getenv("SERVER_URL")
-#server_url = os.getenv("http://localhost:4000","http://localhost:4000")
+#server_url = os.getenv("SERVER_URL")
+server_url = os.getenv("http://localhost:4000","http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
 def deleteOriginalFile():
@@ -49,7 +51,8 @@ if uploaded_file_path :
     save_dir = app_dir / 'complete_images' 
     save_dir.mkdir(parents=True, exist_ok=True)
     
-    save_path = save_dir / f"{random}.png"
+    uu_id = uuid.uuid4().hex  # 一意の16進文字列
+    save_path = save_dir / f"{uu_id}.png"
     print('保存パスはこれです', save_path)
 
     cv2.imwrite(str(save_path), resultImage)  # 加工した画像を保存
