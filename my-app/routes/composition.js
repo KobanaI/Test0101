@@ -147,14 +147,14 @@
 // });
 
 
-app.get("/displayResults", (req, res) => {
+// app.get("/displayResults", (req, res) => {
 
-  console.log("うお直前の！"+req.session.fileUrl)
-  console.log('filepath type:', typeof req.session.fileUrl);  // デバッグ用
-  res.render('result', { filepath: req.session.fileUrl });
- // res.render('result',{filepath:fileUrl})
+//   console.log("うお直前の！"+req.session.fileUrl)
+//   console.log('filepath type:', typeof req.session.fileUrl);  // デバッグ用
+//   res.render('result', { filepath: req.session.fileUrl });
+//  // res.render('result',{filepath:fileUrl})
 
-  const deleteDelay = 600000;
+//   const deleteDelay = 600000;
 //   setTimeout(() => {
 
 //     fs.access(absolutePath)
@@ -191,7 +191,7 @@ app.get("/displayResults", (req, res) => {
 //       });
 //   }
 // }, deleteDelay);
-});
+// });
 
 
 // module.exports = app;
