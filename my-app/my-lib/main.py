@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 #SERVER_URL認識されない。
-cdserver_url = os.getenv("SERVER_URL")
+server_url = os.getenv("SERVER_URL")
 #server_url = os.getenv("http://localhost:4000","http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
