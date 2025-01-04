@@ -6,8 +6,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const compositionRouter = require('./routes/composition');
-const usersRouter = require('./routes/users');
-
+const resultRouter = require('./routes/result');
 const app = express();
 
 // view engine setup
@@ -20,15 +19,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/result", (req, res) => {
-  const fileUrl = req.query.path; // クエリパラメータを取得
-  console.log("Rendering result page with fileUrl:", fileUrl);
-  res.render("result", { filepath: fileUrl });
-});
+
 
 app.use('/', indexRouter);
 app.use('/composition', compositionRouter);
-app.use('/users', usersRouter);
+app.use('/result', resultRouter);
+
+
 
 app.use('/complete_images', express.static(path.join(__dirname, 'complete_images')));
 app.use(express.static(path.join(__dirname, 'complete_images')));

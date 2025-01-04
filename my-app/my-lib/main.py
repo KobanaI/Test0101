@@ -25,7 +25,7 @@ def generate_random_string(length=10):
 
 def addSimply(image):
    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-   image_path = os.path.join(project_root, "public", "images", "2697532_s.jpg")
+   image_path = os.path.join(project_root, "public", "images", "n2AnGreC4Y.png")
    errImage = cv2.imread(image_path)
    errImage = cv2.resize(errImage,(image.shape[1],image.shape[0]))
    addImage = image + errImage
@@ -45,7 +45,6 @@ if uploaded_file_path :
     
     resultImage = addSimply(image)
     #resultImage = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-    random = "ujyfyu"
 
     app_dir = Path(__file__).resolve().parent.parent 
     save_dir = app_dir / 'complete_images' 

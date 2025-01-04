@@ -13,8 +13,16 @@ document.getElementById("form1").addEventListener("submit", async (event) => {
 
   if (response.ok){
     const data = await response.json(); 
-    console.log(data)
-    window.location.href = `/result?path=${encodeURIComponent(data)}`;
+   // console.log(data)
+    const imgsrc = data.imgsrc
+    const resultImgPath = data.resultImgPath
+
+    //console.log(imgsrc,resultImgPath)
+
+    const queryParams = 
+      new URLSearchParams({ imgsrc: imgsrc, resultImgPath: resultImgPath });
+
+    window.location.href = `/result?${queryParams.toString()}`;
   }
 
 });

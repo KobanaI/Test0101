@@ -1,8 +1,25 @@
+a {
+  color: #182125;
+  background-color: black;
+}
+.black-background {
+  background-color: black;
+  color: white; /* テキストを白にして読みやすくする */
+  height: 100vh; /* 画面全体をカバー */
+  margin: 0; /* 余白をリセット */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: black;
+  color: white; /* テキストを白くして見やすくする */
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* 画面全体をカバー */
 }
 
-a {
-  color: #00B7FF;
+h1, h2 {
+  text-align: center;
+  color: rgb(255, 0, 0); /* 必要に応じて指定 */
 }

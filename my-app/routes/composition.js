@@ -1,20 +1,17 @@
 const express = require("express");
 const path = require("path");
 const formidable =require('formidable')
-
 const fs = require('fs').promises;
 const { execFile } = require('child_process');
-const session = require('express-session');
+const { setTimeout } = require("timers/promises");
 
 const app = express();
+const session = require('express-session');
 
 app.use(session({
   secret: 'your-secret-key', // セッション識別用の秘密キー
   resave: false, // セッションが変更されない場合でも保存するか
   saveUninitialized: true, // 初期化されていないセッションを保存するか
-  cookie: { 
-    maxAge: 60000 * 10 // セッションの有効期限を10分（ミリ秒）に設定
-  },
 }));
 
 
@@ -29,9 +26,8 @@ app.get("/", (req, res) => {
 app.post("/process-file", (req, res) => {
 
   const userSession = req.session;
-
-  if (userSession.absolutePath) {
-    deleteBeforeImage(userSession.absolutePath,userSession);
+  if (userSession.zettai) {
+    deleteImagefast(userSession.zettai,userSession);
   }
   
   const form = new formidable.IncomingForm();
@@ -39,69 +35,61 @@ app.post("/process-file", (req, res) => {
   form.keepExtensions = true; // 拡張子を保持
 
   form.parse(req, (err, fields, files) => {
-    if (err) {
-      console.log('処理は現在11')
-      console.error("ファイルアップロード中のエラー:", err);
-      res.status(500).send("ファイルのアップロード中にエラーが発生しました");
+    
+
+    if (!files.file){
+      res.status(400).send("ファイルkkkkがアップロードされていません");
       return;
     }
+    userSession.uploadedFilePath = files.file[0].filepath;
+    userSession.zettai = files.file[0].filepath;
 
-    
-    if (files.file) {
-      userSession.uploadedFilePath = files.file[0].filepath;
-      userSession.absolutePath = files.file[0].filepath;
+    const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
+    const args = [pythonScriptPath, userSession.uploadedFilePath];
 
-
-      const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
-      const args = [pythonScriptPath, userSession.uploadedFilePath];
-      execFile('python', args, (error, stdout, stderr) => {
-        if (error || stderr) {
-          console.error("Pythonでエラー:", error || stderr);
-          res.status(500).send("Pythonスクリプトでエラーが発生しました");
-          return;
-        }
-    
-        try {
-          // stdout が JSON 形式として出力されている前提でパース
-          const pythonResult = JSON.parse(stdout);
-          const imagePath = pythonResult.path;
-          const resolvedPath = path.resolve(imagePath);
-          const basePath = path.join(__dirname, './');
-          const soutaiPath = path.relative(basePath, resolvedPath);
-
-          console.log("画像のパス:", soutaiPath);
+    execFile('python', args,  (error, stdout, stderr) => {
+      if (error || stderr) {
+        console.error("Pythonでエラー:", error || stderr);
+        res.status(500).send("Pythonスクリプトでエラーが発生しました");
+        return;
+      }
+        const imagePath = JSON.parse(stdout).path;
+        const zettai = path.resolve(imagePath);
+        const soutai = path.relative(path.join(__dirname, './'), zettai);
+        console.log("画像のパス:", soutai);
         
-          req.session.absolutePath = resolvedPath;
-          req.session.fileUrl = soutaiPath.replace(/\\/g, '/');
-          console.log("うざいやiggiuiguつ" + req.session.fileUrl);
-          res.json(req.session.fileUrl);
-        } catch (err) {
-          console.error("JSON パースエラー:", err);
-          res.status(500).send("Python 出力のパースエラー");
-        }
-      });
+        req.session.zettai = zettai;
+        req.session.imgsrc = soutai.replace(/\\/g, '/');
 
-    } else {
-      console.log('処理は現在10')
-      res.status(400).send("ファイルkkkkがアップロードされていません");
-    }
+        //pugでつかうimg-srcと、保存してる写真のpathを送る（後で消すため）
+        res.json({
+          imgsrc: req.session.imgsrc,
+          resultImgPath: req.session.zettai
+        });
+      });
   });
 
 });
 
-function deleteBeforeImage(absolutePath,userSession){
-  if(absolutePath){
-    console.log('前の画像：ちーすまだ消えてません')
-    fs.unlink(absolutePath)
-    .then(() => {
-      console.log('前の画像が消えました');
-      userSession.absolutePath = "";
-      userSession.fileUrl = "";
-    })
+//短時間に2度uploadすると、上書きされて削除されないため、ここで強制的に削除
+function deleteImagefast(zettai,userSession){
+
+  if(zettai==""|| !zettai){
+    console.error("ファイルのパスが無")
+    return;
   }
+
+  fs.unlink(zettai)
+  .then(() => {
+    console.log('前の画像消した。もう一度遊べるドン');
+    userSession.zettai = "";
+    userSession.fileUrl = "";
+
+  }).catch((error) => {
+    console.error('削除失敗');
+    userSession.zettai = "";
+    userSession.fileUrl = "";
+  });
 }
-
-
-
 
 module.exports = app;
