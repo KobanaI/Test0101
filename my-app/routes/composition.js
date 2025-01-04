@@ -4,14 +4,16 @@ const formidable =require('formidable')
 const fs = require('fs').promises;
 const { execFile } = require('child_process');
 const { setTimeout } = require("timers/promises");
+const session = require('express-session');
 
 const app = express();
-const session = require('express-session');
+
 
 app.use(session({
   secret: 'your-secret-key', // セッション識別用の秘密キー
   resave: false, // セッションが変更されない場合でも保存するか
-  saveUninitialized: true, // 初期化されていないセッションを保存するか
+  saveUninitialized: false,
+
 }));
 
 
@@ -24,7 +26,7 @@ app.get("/", (req, res) => {
 //画像ファイル追跡2：
 // アップロードされた画像をformidableで保存し、main.pyへ
 app.post("/process-file", (req, res) => {
-
+console.log("処理は現在1")
   const userSession = req.session;
   if (userSession.zettai) {
     deleteImagefast(userSession.zettai,userSession);
@@ -34,6 +36,7 @@ app.post("/process-file", (req, res) => {
   form.uploadDir = path.join(__dirname, '../uploads'); 
   form.keepExtensions = true; // 拡張子を保持
 
+  console.log("処理は現在10")
   form.parse(req, (err, fields, files) => {
     
 
@@ -41,18 +44,22 @@ app.post("/process-file", (req, res) => {
       res.status(400).send("ファイルkkkkがアップロードされていません");
       return;
     }
+    console.log("処理は現在11")
     userSession.uploadedFilePath = files.file[0].filepath;
     userSession.zettai = files.file[0].filepath;
 
     const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
     const args = [pythonScriptPath, userSession.uploadedFilePath];
 
+    console.log("処理は現在100")
     execFile('python', args,  (error, stdout, stderr) => {
       if (error || stderr) {
+        
         console.error("Pythonでエラー:", error || stderr);
         res.status(500).send("Pythonスクリプトでエラーが発生しました");
         return;
       }
+      console.log("処理は現在101")
         const imagePath = JSON.parse(stdout).path;
         const zettai = path.resolve(imagePath);
         const soutai = path.relative(path.join(__dirname, './'), zettai);
