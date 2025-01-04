@@ -1,11 +1,13 @@
-doctype html
-html(lang="en")
+extends layout
+
+block content
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title Upload a Photoえくす
   body
     h1 画像を選択
+     div(id="result")  
     div 
       h2 グリッチアート【リンクを張る】が苦手な方はおすすめしません
     form(id="form1", enctype="multipart/form-data", action="/composition/process-file", method="POST")
@@ -13,3 +15,8 @@ html(lang="en")
       button(type="submit",id="uploadButton") Upload
 
     script(src="/javascripts/formHandler.js")
+  if filepath
+    h1 filepathがありました 
+  else 
+    h1 なにもねえよ
+  

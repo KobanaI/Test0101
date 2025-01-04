@@ -1,20 +1,20 @@
 import sys,secrets,string,requests,cv2,os,uuid
 from pathlib import Path
+import json  # 追加
 
 
 
 
 
 #SERVER_URL認識されない。
-server_url = os.getenv("SERVER_URL")
-#server_url = os.getenv("http://localhost:4000","http://localhost:4000")
+#server_url = os.getenv("SERVER_URL")
+server_url = os.getenv("http://localhost:4000","http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
 def deleteOriginalFile():
   path = Path(uploaded_file_path)
   try:
     path.unlink()
-    print(f"{path} は消え去りました。さようなら")
   except :
     print("なんかエラーでたぞpython")
 
@@ -53,14 +53,18 @@ if uploaded_file_path :
     
     uu_id = uuid.uuid4().hex  # 一意の16進文字列
     save_path = save_dir / f"{uu_id}.png"
-    print('保存パスはこれです', save_path)
+
+    #print('保存パスはこれです', save_path)
 
     cv2.imwrite(str(save_path), resultImage)  # 加工した画像を保存
     deleteOriginalFile()
 
-
+    
     data = {"path": str(save_path)} 
-    requests.post(f'{server_url}/composition/completeChangeImg',json=data)
+    data["path"] = data["path"].replace("\\", "/")
+    print(json.dumps(data))  # json.dumps を使用してデータを JSON 形式で出力
+    
+    #requests.post(f'{server_url}/composition/completeChangeImg',json=data)
 
 
 else:

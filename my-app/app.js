@@ -20,6 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get("/result", (req, res) => {
+  const fileUrl = req.query.path; // クエリパラメータを取得
+  console.log("Rendering result page with fileUrl:", fileUrl);
+  res.render("result", { filepath: fileUrl });
+});
 
 app.use('/', indexRouter);
 app.use('/composition', compositionRouter);
