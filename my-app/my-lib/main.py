@@ -7,8 +7,8 @@ import json  # 追加
 
 
 #SERVER_URL認識されない。
-#server_url = os.getenv("SERVER_URL")
-server_url = os.getenv("http://localhost:4000","http://localhost:4000")
+server_url = os.getenv("SERVER_URL")
+#server_url = os.getenv("http://localhost:4000","http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
 def deleteOriginalFile():
