@@ -1,22 +1,16 @@
 extends layout
 
 block content
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Upload a Photoえくす
-  body
-    h1 画像を選択
-     div(id="result")  
-    div 
-      h2 グリッチアートまたはホラー画像が苦手な方はおすすめしません
-    form(id="form1", enctype="multipart/form-data", action="/composition/process-file", method="POST")
-      input(type="file", name="file", id="fileInput", accept="image/*", required)
-      button(type="submit",id="uploadButton") Upload
+  main
+    div
+      form(id="form1", enctype="multipart/form-data", action="/composition/process-file", method="POST")
+        input(type="file", name="file", id="fileInput", accept="image/*", required)
+        input(type="hidden" name="_csrf" value!=csrfToken)
+        button(type="submit", id="uploadButton") Upload
+      p ※グリッチアート,ホラー画像が出てくる可能性があります
 
-    script(src="/javascripts/formHandler.js")
-  if filepath
-    h1 filepathがありました 
-  else 
-    h1 なにもねえよ
-  
+
+
+  script(src="/javascripts/formHandler.js")
+
+

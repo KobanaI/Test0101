@@ -3,55 +3,52 @@ const path = require("path");
 const formidable =require('formidable')
 const fs = require('fs').promises;
 const { execFile } = require('child_process');
-const { setTimeout } = require("timers/promises");
-const session = require('express-session');
 
 const app = express();
 
+const DebugMode = false;
 
-app.use(session({
-  secret: 'your-secret-key', // セッション識別用の秘密キー
-  resave: false, // セッションが変更されない場合でも保存するか
-  saveUninitialized: false,
-
-}));
-
+function deb(number){
+  if(!DebugMode)return;
+  console.log(`現在の処理は${number}`);
+}
 
 
 app.get("/", (req, res) => {
-  res.render('mainsystem')
+  res.render('mainsystem',{bodyClass:'main'})
 });
 
 
-//画像ファイル追跡2：
+//Process２：
 // アップロードされた画像をformidableで保存し、main.pyへ
 app.post("/process-file", (req, res) => {
-console.log("処理は現在1")
+  deb(0);
   const userSession = req.session;
-  if (userSession.zettai) {
-    deleteImagefast(userSession.zettai,userSession);
-  }
-  
+  userSession.zettai && deleteBeforeImage(userSession.zettai,userSession);
+  saveAndEdit(req,res,userSession);
+
+});
+
+function saveAndEdit(req,res,userSession){
   const form = new formidable.IncomingForm();
   form.uploadDir = path.join(__dirname, '../uploads'); 
   form.keepExtensions = true; // 拡張子を保持
 
-  console.log("処理は現在10")
+  deb(1);
   form.parse(req, (err, fields, files) => {
     
-
     if (!files.file){
-      res.status(400).send("ファイルkkkkがアップロードされていません");
+      res.status(400).send("ファイルがねえ");
       return;
     }
-    console.log("処理は現在11")
+    deb(10);
     userSession.uploadedFilePath = files.file[0].filepath;
     userSession.zettai = files.file[0].filepath;
 
     const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
     const args = [pythonScriptPath, userSession.uploadedFilePath];
 
-    console.log("処理は現在100")
+    deb(11)
     execFile('python', args,  (error, stdout, stderr) => {
       if (error || stderr) {
         
@@ -59,7 +56,7 @@ console.log("処理は現在1")
         res.status(500).send("Pythonスクリプトでエラーが発生しました");
         return;
       }
-      console.log("処理は現在101")
+      deb(100)
         const imagePath = JSON.parse(stdout).path;
         const zettai = path.resolve(imagePath);
         const soutai = path.relative(path.join(__dirname, './'), zettai);
@@ -68,34 +65,31 @@ console.log("処理は現在1")
         req.session.zettai = zettai;
         req.session.imgsrc = soutai.replace(/\\/g, '/');
 
-        //pugでつかうimg-srcと、保存してる写真のpathを送る（後で消すため）
-        res.json({
-          imgsrc: req.session.imgsrc,
-          resultImgPath: req.session.zettai
-        });
+        res.json(true);
       });
   });
+}
 
-});
+
 
 //短時間に2度uploadすると、上書きされて削除されないため、ここで強制的に削除
-function deleteImagefast(zettai,userSession){
+function deleteBeforeImage(zettai,userSession){
 
   if(zettai==""|| !zettai){
-    console.error("ファイルのパスが無")
+    console.error("ファイルパスが無")
     return;
   }
 
   fs.unlink(zettai)
   .then(() => {
-    console.log('前の画像消した。もう一度遊べるドン');
+    console.log('前の画像消した。もう一回遊べるドン');
     userSession.zettai = "";
-    userSession.fileUrl = "";
+    userSession.imgsrc = "";
 
   }).catch((error) => {
     console.error('削除失敗');
     userSession.zettai = "";
-    userSession.fileUrl = "";
+    userSession.imgsrc = "";
   });
 }
 

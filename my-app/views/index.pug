@@ -1,6 +1,22 @@
-extends layout
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body(class="lp")
+    div(class="head")
+      a(href="/" action="/") 
+        img(src="/images/logo.png", alt="画像",class="logo") 
 
-block content
-  h1= title
-  p Welcome to #{title}
-  a(href="/composition") df 
+      nav 
+        ul 
+          li サービス
+        ul 
+          li 本サイトについて
+        ul 
+          li Contact
+    div(class="middle")
+      h1 色の画像破壊
+      p 撮影した写真や保存した画像の色を変えたり、効果を加え、新たな画像を生成します。
+      div(class="sub")
+        a(href="/composition",class="startBtn") 始める

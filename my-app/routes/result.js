@@ -3,12 +3,14 @@ const app = express();
 const fs = require('fs').promises;
 
 app.get("/", (req, res) => {
-  const imgsrc = req.query.imgsrc; 
-  const deletePath = req.query.resultImgPath; 
-  
-  console.log("result page imgsrc:", imgsrc);
-  res.render("result", { filepath: imgsrc });
+  const imgsrc = req.session.imgsrc; 
+  const deletePath = req.session.zettai; 
 
+  //res.render("result", { filepath: imgsrc,csurfToken:req.csurfToken() });
+  res.render("result", {
+     filepath: imgsrc,
+     csurfToken:req.csrfToken(),
+     bodyClass:'main' });
 
   setTimeout(() => {
     if (deletePath) {

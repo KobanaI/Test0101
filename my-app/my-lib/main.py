@@ -1,4 +1,4 @@
-import sys,secrets,string,requests,cv2,os,uuid
+import sys,secrets,string,cv2,os,uuid
 from pathlib import Path
 import json  # 追加
 
@@ -18,11 +18,6 @@ def deleteOriginalFile():
   except :
     print("なんかエラーでたぞpython")
 
-def generate_random_string(length=10):
-    alphabet = string.ascii_letters + string.digits + string.punctuation
-    random_string = ''.join(secrets.choice(alphabet) for _ in range(length))
-    return random_string
-
 def addSimply(image):
    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
    image_path = os.path.join(project_root, "public", "images", "n2AnGreC4Y.png")
@@ -33,7 +28,7 @@ def addSimply(image):
    return addImage
 
 
-#画像ファイル追跡3：
+#Process３：
 # アップロードされた画像をopencvで加工し、加工した画像をcomplete_imagesへ保存
 #元の画像はもういらないので、消す
 #composition.jsで、表示する準備をする
@@ -44,16 +39,15 @@ if uploaded_file_path :
     image = cv2.imread(uploaded_file_path)
     
     resultImage = addSimply(image)
+
     #resultImage = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
 
     app_dir = Path(__file__).resolve().parent.parent 
     save_dir = app_dir / 'complete_images' 
     save_dir.mkdir(parents=True, exist_ok=True)
     
-    uu_id = uuid.uuid4().hex  # 一意の16進文字列
+    uu_id = uuid.uuid4().hex
     save_path = save_dir / f"{uu_id}.png"
-
-    #print('保存パスはこれです', save_path)
 
     cv2.imwrite(str(save_path), resultImage)  # 加工した画像を保存
     deleteOriginalFile()
@@ -62,8 +56,7 @@ if uploaded_file_path :
     data = {"path": str(save_path)} 
     data["path"] = data["path"].replace("\\", "/")
     print(json.dumps(data))  # json.dumps を使用してデータを JSON 形式で出力
-    
-    #requests.post(f'{server_url}/composition/completeChangeImg',json=data)
+
 
 
 else:

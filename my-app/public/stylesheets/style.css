@@ -1,25 +1,135 @@
-a {
-  color: #182125;
-  background-color: black;
-}
-.black-background {
-  background-color: black;
-  color: white; /* テキストを白にして読みやすくする */
-  height: 100vh; /* 画面全体をカバー */
-  margin: 0; /* 余白をリセット */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-body {
-  background-color: black;
-  color: white; /* テキストを白くして見やすくする */
+*{
   margin: 0;
   padding: 0;
-  height: 100vh; /* 画面全体をカバー */
+  box-sizing: border-box;
+}
+:root{
+  --primary:#FC466B;
+  --secondary:#1be900;
+  --thirdry:#0094e9;
+}
+body.lp {
+  height: 100vh;
+  width: 100%;
+
+  background-image: url("/images/gahag-0048575012.jpg");
+  background-size: cover;
+  color: rgb(255, 255, 255);
 }
 
-h1, h2 {
+body::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(53, 53, 53);
+  opacity: 0.7;
+  z-index: -1;
+}
+
+
+div.head {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  background-color: rgb(0, 0, 0);
+  overflow: hidden;
+}
+div .logo{
+  height: 100px;
+  width: 100px;
+}
+
+div nav{
+  justify-content: right;
+}
+div nav ul {
+  list-style: none;
+  display: inline-block;
+  margin-left: 30px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+}
+
+div.middle{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+/* header nav ul a {
+  text-decoration: none;
+  margin-left: 30px;
+  font-weight: 600;
+  color: aliceblue;
+  transition: all 0.3s;
+} */
+main div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
   text-align: center;
-  color: rgb(255, 0, 0); /* 必要に応じて指定 */
+  color: aliceblue;
+
+}
+
+main div h1 {
+  margin-bottom: 20px;
+}
+
+h1{
+  text-align: center;
+  font-size: 70px;
+}
+h2{
+  text-align: center;
+  font-size: 70px;
+}
+a{
+  text-decoration: none;
+}
+input{
+  width: 1000px;
+  height: 100px;
+  font-size: 50px;  /* 文字サイズを指定 */
+  padding: 10px;  /* 内側の余白を設定 */
+}
+button{
+  display: block; /* インライン要素をブロック要素に変更 */
+  margin-bottom: 10px; /* 下に余白を追加 */
+  width: 500px;
+  height: 100px;
+  text-align: center;
+}
+
+
+div.sub{
+  padding-top: 50px;
+  text-align: center;
+  
+}
+.startBtn{
+  background-color: #66e5dc;
+  padding: 17px 30px;
+  border-radius: 50px;
+}
+div.result{
+  width: 600px; /* divの幅 */
+  height: 600px; /* divの高さ */
+  background-color: #0094e9;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,-70%);
+}
+img.result{
+  height: 100%;
+  width: auto;
+
+  
+  object-fit: cover;
 }

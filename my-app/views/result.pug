@@ -1,10 +1,9 @@
 extends layout
 
 block content
-  h1 深刻なエラーが発生（ホdeォント）
+  p 結果
   if filepath && filepath != ''
-    img(src=filepath, alt="読み込みエラーが発生しました")
+    div(class="result")
+      img(src=filepath, alt="読み込みエラーが発生しました",class="result")
   else
     h2 画像の処理が失敗しました。サーバー側に問題がある可能性が高いです。
-
-
