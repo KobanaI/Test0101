@@ -2,134 +2,229 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
+  
 }
-:root{
-  --primary:#FC466B;
-  --secondary:#1be900;
-  --thirdry:#0094e9;
+body{
+  background-color: gray;
 }
-body.lp {
-  height: 100vh;
-  width: 100%;
-
-  background-image: url("/images/gahag-0048575012.jpg");
-  background-size: cover;
-  color: rgb(255, 255, 255);
+h1{
+  font-size: 60px;
+  margin: 0;
+  text-align: center;
 }
 
-body::after{
+@media screen and (max-width:1024px) {
+  h1{
+    font-size: 60px;
+  }
+}
+@media screen and (max-width:768px) {
+  h1{
+    font-size: 40px;
+  }
+}
+@media screen and (max-width:480px) {
+  h1{
+    font-size: 30px;
+  }
+}
+
+
+body.lp::after{
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(53, 53, 53);
+  background-color: rgb(0, 0, 0);
   opacity: 0.7;
   z-index: -1;
 }
 
-
-div.head {
-  width: 100%;
-  align-items: center;
-  display: flex;
-  background-color: rgb(0, 0, 0);
-  overflow: hidden;
-}
-div .logo{
-  height: 100px;
-  width: 100px;
-}
-
-div nav{
-  justify-content: right;
-}
-div nav ul {
-  list-style: none;
-  display: inline-block;
-  margin-left: 30px;
-  font-weight: 600;
-  color: rgb(255, 255, 255);
-}
-
-div.middle{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
-/* header nav ul a {
-  text-decoration: none;
-  margin-left: 30px;
-  font-weight: 600;
-  color: aliceblue;
-  transition: all 0.3s;
-} */
-main div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  white-space: nowrap;
+footer{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #333;
+  color: white;
+  padding: 10px;
   text-align: center;
-  color: aliceblue;
-
+  width: 200px; /* 任意の幅を設定 */
 }
 
-main div h1 {
-  margin-bottom: 20px;
-}
-
-h1{
-  text-align: center;
-  font-size: 70px;
-}
-h2{
-  text-align: center;
-  font-size: 70px;
-}
 a{
   text-decoration: none;
+  color: white;
+  text-align: center;
 }
-input{
-  width: 1000px;
-  height: 100px;
-  font-size: 50px;  /* 文字サイズを指定 */
-  padding: 10px;  /* 内側の余白を設定 */
+
+
+
+
+body.lp{
+  position: relative;
+  background-position: center; 
+  background-image: url("/images/gahag-0048575012.jpg");
+  background-size: cover;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100vh;
+}
+
+
+.logo{
+  height: 10vh;
+  width: 100%;
+  object-fit: contain;
+  
+}
+
+header{
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  
+}
+
+nav{
+  width: 100%;
+  height: 10vh;  /* ビューポートの高さの10%に設定 */
+  background-color: #333;
+  color: white;
+  display: flex;  /* 横並びにアイテムを配置する場合 */
+  align-items: center;  /* アイテムを縦中央に */
+  justify-content:space-evenly;
+  flex-wrap: nowrap;
+}
+
+ul{
+  list-style: none;
+  margin: 0;  /* ulのデフォルトの余白を削除 */
+  padding: 0;
+}
+li{
+  display: inline-block;
+  margin-left: 10vh;
+  font-weight: 800;
+}
+
+.title{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;  /* 子要素間の間隔を20pxに設定 */
+}
+
+
+.startBtn{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: #7d0707;
+  padding: 17px 30px;
+
+  border-style: groove;
+  margin-top: 10vh;
+}
+
+
+
+/*mainsystemm.pug*/
+
+input.up{
+  width: 70%;
+  margin-top: 5vh;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color:rgb(0, 0, 0);
+  color: rgb(221, 221, 221);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+input[type="file"].up:valid::after {
+  content: "↓";
+  color: rgb(255, 255, 255);
+  font-size: 5vh;
+  margin-left: 10px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 子要素を中央揃え */
+  margin-bottom: 1rem;
+  color: rgb(255, 255, 255);
 }
 button{
-  display: block; /* インライン要素をブロック要素に変更 */
-  margin-bottom: 10px; /* 下に余白を追加 */
-  width: 500px;
-  height: 100px;
+  border-style:groove;
+  background-color: black;
+  color: white;
+  width: 50%;
+  margin-bottom: 5vh;
+}
+
+div.explain{
+  color: white;
   text-align: center;
+  padding-top: 5vh;
+}
+div.explain2{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+
+  position: fixed;
+  bottom: 0;
+  right: 0;
+
+  color: white;
+
 }
 
 
-div.sub{
-  padding-top: 50px;
+
+
+/* 
+result.pug */
+
+h2.result{
   text-align: center;
-  
 }
-.startBtn{
-  background-color: #66e5dc;
-  padding: 17px 30px;
-  border-radius: 50px;
-}
+
 div.result{
-  width: 600px; /* divの幅 */
-  height: 600px; /* divの高さ */
-  background-color: #0094e9;
+
   position: absolute;
-  top: 70%;
+  top: -50%;
   left: 50%;
-  transform: translate(-50%,-70%);
+  transform: translate(-50%,50%);
+  background-image:url("/images/gahag-0075581837.png");
+  position: absolute;
+  width: 80vw; /* ビューポートの幅の80% */
+  height: 60vh; /* ビューポートの高さの70% */
+
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+
+  border-style:groove;
+  border-bottom-width: 20px;
+  border-bottom-color: #8f754b;
 }
+
 img.result{
   height: 100%;
-  width: auto;
-
-  
-  object-fit: cover;
+  width: 100%;
+  object-fit: contain;
 }

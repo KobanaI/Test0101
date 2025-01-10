@@ -32,9 +32,11 @@ app.post("/process-file", (req, res) => {
 function saveAndEdit(req,res,userSession){
   const form = new formidable.IncomingForm();
   form.uploadDir = path.join(__dirname, '../uploads'); 
-  form.keepExtensions = true; // 拡張子を保持
+  form.keepExtensions = true;
 
   deb(1);
+
+  //ここで画像をいったん保存
   form.parse(req, (err, fields, files) => {
     
     if (!files.file){
@@ -45,18 +47,29 @@ function saveAndEdit(req,res,userSession){
     userSession.uploadedFilePath = files.file[0].filepath;
     userSession.zettai = files.file[0].filepath;
 
+    
+    //ここで画像ファイル以外を弾く
+    const uploadedFile = files.file[0];
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    if (!allowedTypes.includes(uploadedFile.mimetype)) {
+      res.status(400).send('画像ファイルのみアップロードできます');
+      return;
+    }
+    //でかいfileを送らせない
+    form.maxFileSize = 10 * 1024 * 1024;
+
     const pythonScriptPath = path.resolve(__dirname, '../my-lib/main.py');
     const args = [pythonScriptPath, userSession.uploadedFilePath];
 
-    deb(11)
+    deb(11);
     execFile('python', args,  (error, stdout, stderr) => {
       if (error || stderr) {
         
         console.error("Pythonでエラー:", error || stderr);
-        res.status(500).send("Pythonスクリプトでエラーが発生しました");
+        res.status(500).send("エラーが発生しましたp");
         return;
       }
-      deb(100)
+      deb(100);
         const imagePath = JSON.parse(stdout).path;
         const zettai = path.resolve(imagePath);
         const soutai = path.relative(path.join(__dirname, './'), zettai);

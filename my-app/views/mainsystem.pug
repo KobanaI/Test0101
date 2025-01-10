@@ -1,16 +1,31 @@
 extends layout
 
 block content
-  main
-    div
+    div(class="main")
+      div(class="explain")
+        h2 画像【jpg、png】を選択し送信
+
+
+
+
       form(id="form1", enctype="multipart/form-data", action="/composition/process-file", method="POST")
-        input(type="file", name="file", id="fileInput", accept="image/*", required)
-        input(type="hidden" name="_csrf" value!=csrfToken)
-        button(type="submit", id="uploadButton") Upload
-      p ※グリッチアート,ホラー画像が出てくる可能性があります
+
+        div(class="form-group")
+          input(type="file", name="file",class="up", id="fileInput", accept="image/*", required)
+          input(type="hidden" name="_csrf" value!=csrfToken)
+
+        div(class="form-group")
+          button(type="submit",class="up" id="uploadButton")
+            h2 送信
+      div(class="explain2")
+
+        p ※ グリッチアート,ホラー画像が出てくる可能性があります。
+        br
+        p ※ 送信ボタンを押してから、表示までに1分以上かかる場合はやり直ししてください。
 
 
 
-  script(src="/javascripts/formHandler.js")
+
+    script(src="/javascripts/formHandler.js")
 
 

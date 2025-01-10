@@ -1,19 +1,20 @@
 doctype html
 html
   head
-    title= title
+    meta(name="viewport",content="width=device-width,initial-scale=1")
+
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    div(class="head")
-      a(href="/" action="/") 
-        img(src="/images/logo.png", alt="画像",class="logo") 
-
-      nav 
+    header 
+      nav
+        a(href="/") ■LOGO■
+          
+          //- img(src="/images/logo.png", alt="画像",class="logo") 
         ul 
-          li サービス
+          li
+            a(href="https://n-highschool.slack.com/archives/C07BP08SGJH") slackチャンネル
         ul 
-          li 本サイトについて
-        ul 
-          li Contact
+          li その他SNS今は無し
     block content
+    
 

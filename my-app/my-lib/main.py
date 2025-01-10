@@ -1,12 +1,11 @@
-import sys,secrets,string,cv2,os,uuid
+import sys,cv2,os,uuid,random,json
 from pathlib import Path
-import json  # 追加
 
 
 
 
 
-#SERVER_URL認識されない。
+#SERVER_URL認識されない？
 server_url = os.getenv("SERVER_URL")
 #server_url = os.getenv("http://localhost:4000","http://localhost:4000")
 uploaded_file_path = sys.argv[1]
@@ -18,14 +17,29 @@ def deleteOriginalFile():
   except :
     print("なんかエラーでたぞpython")
 
+def randomImageSelect():
+  image_name = ["bug1.jpg",
+                "resultBack.png",
+                "ByWPiqSIkE.png", 
+                "n2AnGreC4Y.png",
+                "logo.png"]
+  return random.choice(image_name)
+
+
 def addSimply(image):
    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-   image_path = os.path.join(project_root, "public", "images", "n2AnGreC4Y.png")
+   image_path = os.path.join(project_root, "bugImages",randomImageSelect())
    errImage = cv2.imread(image_path)
    errImage = cv2.resize(errImage,(image.shape[1],image.shape[0]))
    addImage = image + errImage
 
+  #  image_path = os.path.join(project_root, "bugImages",randomImageSelect())
+  #  errImage = cv2.imread(image_path)
+  #  errImage = cv2.resize(errImage,(image.shape[1],image.shape[0]))
+  #  addImage = addImage + errImage
+
    return addImage
+
 
 
 #Process３：

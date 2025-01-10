@@ -1,9 +1,12 @@
 extends layout
 
 block content
-  p 結果
-  if filepath && filepath != ''
-    div(class="result")
-      img(src=filepath, alt="読み込みエラーが発生しました",class="result")
-  else
-    h2 画像の処理が失敗しました。サーバー側に問題がある可能性が高いです。
+  h2(class="result") 破壊された画像
+  div(class="result")
+    if filepath && filepath != ''
+      img(src=filepath, alt="画像は消えた...",class="result")
+    else
+      h2 画像は消えた...
+
+
+//- TODO Xついったーを始めて、共有する画面を作る！！！！！！！！！

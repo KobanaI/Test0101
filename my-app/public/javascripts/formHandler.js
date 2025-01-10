@@ -1,6 +1,8 @@
 //Process１：
 // アップロードされた画像を取得して、composition.jsへ
 
+
+
 document.getElementById("form1").addEventListener("submit", async (event) => {
 
   event.preventDefault();
