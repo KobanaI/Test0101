@@ -22,7 +22,10 @@ def randomImageSelect():
                 "resultBack.png",
                 "ByWPiqSIkE.png", 
                 "n2AnGreC4Y.png",
-                "logo.png"]
+                "logo.png",
+                "NCdHbTEEK1.png",
+                "Z7KsnB4xWw.png",
+                "il1s36cg3C.png"]
   return random.choice(image_name)
 
 
