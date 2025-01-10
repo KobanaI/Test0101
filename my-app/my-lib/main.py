@@ -19,7 +19,6 @@ def deleteOriginalFile():
 
 def randomImageSelect():
   image_name = ["bug1.jpg",
-                "resultBack.png",
                 "ByWPiqSIkE.png", 
                 "n2AnGreC4Y.png",
                 "logo.png",
