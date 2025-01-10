@@ -17,6 +17,7 @@ document.getElementById("form1").addEventListener("submit", async (event) => {
 
   if (response.ok){
     window.location.href = `/result`;
+    document.getElementById("uploadButton").disabled = false;
   }
 
 });
