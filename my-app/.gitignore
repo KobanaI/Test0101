@@ -4,5 +4,4 @@ bugImages
 uploads
 
 node_modules
-yarn.lock
 .env

@@ -34,7 +34,7 @@ function deleteImage(deletePath){
   .then(() => {
     console.log('時間経過で画像消した！');
   }).catch((error) => {
-    console.error('すでに消えてるかも');
+    console.error('すでに消えてる');
   });
 }
 export default app;
