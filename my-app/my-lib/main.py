@@ -2,12 +2,8 @@ import sys,cv2,os,uuid,random,json
 from pathlib import Path
 
 
-
-
-
-#SERVER_URL認識されない？
 server_url = os.getenv("SERVER_URL")
-#server_url = os.getenv("http://localhost:4000","http://localhost:4000")
+
 uploaded_file_path = sys.argv[1]
 
 def deleteOriginalFile():
