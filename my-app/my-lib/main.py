@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 server_url = os.getenv("SERVER_URL")
-
+#server_url = os.getenv("http://localhost:4000")
 uploaded_file_path = sys.argv[1]
 
 def deleteOriginalFile():

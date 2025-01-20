@@ -1,8 +1,11 @@
-const express = require("express");
-const path = require("path");
-const formidable =require('formidable')
-const fs = require('fs').promises;
-const { execFile } = require('child_process');
+import express from 'express';
+import path from 'path';
+import formidable from 'formidable';
+
+import fs from 'fs/promises';
+import { execFile } from 'child_process';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
@@ -30,10 +33,12 @@ app.post("/process-file", (req, res) => {
 });
 
 function saveAndEdit(req,res,userSession){
-  const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(__dirname, '../uploads'); 
-  form.keepExtensions = true;
 
+  const form = formidable({
+    uploadDir: path.join(__dirname, '../uploads'), 
+    keepExtensions: true
+  });
+  
   deb(1);
 
   //ここで画像をいったん保存
@@ -106,4 +111,4 @@ function deleteBeforeImage(zettai,userSession){
   });
 }
 
-module.exports = app;
+export default app;

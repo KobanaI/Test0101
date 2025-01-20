@@ -1,6 +1,8 @@
-const express = require("express");
+import express from 'express';
+import { promises as fs } from 'fs';
+
 const app = express();
-const fs = require('fs').promises;
+
 
 app.get("/", (req, res) => {
   const imgsrc = req.session.imgsrc; 
@@ -35,4 +37,4 @@ function deleteImage(deletePath){
     console.error('すでに消えてるかも');
   });
 }
-module.exports = app;
+export default app;
