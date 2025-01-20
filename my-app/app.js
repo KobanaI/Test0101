@@ -105,23 +105,19 @@ import indexRouter from './routes/index.js';
 import compositionRouter from './routes/composition.js';
 import resultRouter from './routes/result.js';
 
-// 環境変数の読み込み
+
 dotenv.config();
 
 const app = express();
 
-// __dirname 設定（Windows対応）
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// セキュリティ強化
 app.use(helmet());
 
-// ビューエンジン設定
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// 基本的なミドルウェア
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -129,7 +125,7 @@ app.use(cookieParser('zenstudy_signed_cookies'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/complete_images', express.static(path.join(__dirname, 'complete_images')));
 
-// CSRF設定
+// CSRF
 const csurfsetting = csurf(
   'zenstudysecretsecret987654323456',
   ['POST'],
@@ -137,7 +133,7 @@ const csurfsetting = csurf(
 );
 app.use(csurfsetting);
 
-// セッション設定
+
 const randomSecret = crypto.randomBytes(64).toString('hex');
 
 app.use(
@@ -146,8 +142,8 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: false, // HTTPS 使用時に true に変更
-      maxAge: 60 * 60 * 1000, // 1時間でセッションデータ削除
+      secure: false,
+      maxAge: 60 * 60 * 1000, // 1時間でデータ削除
     },
   })
 );
@@ -157,12 +153,11 @@ app.use('/', indexRouter);
 app.use('/composition', compositionRouter);
 app.use('/result', resultRouter);
 
-// 404エラーハンドラ
+
 app.use((req, res, next) => {
   next(createError(404));
 });
 
-// その他エラーハンドリング
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -171,7 +166,7 @@ app.use((err, req, res, next) => {
 });
 
 // サーバー起動
-const port = 4000 || 4000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`サーバ起動！ポートは ${port}`);
 });
