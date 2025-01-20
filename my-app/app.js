@@ -37,11 +37,25 @@ app.use('/complete_images', express.static(path.join(__dirname, 'complete_images
 
 app.use(session({
   secret: 'your-secret-key', // 任意のシークレットキー
-  resave: false, // セッションが変更されていない場合は再保存しない
-  saveUninitialized: true, // 初期化されていないセッションを保存
-  cookie: { secure: false } // HTTPS環境ではtrueにする
+  resave: false, 
+  saveUninitialized: true,
+  cookie: { secure: false } 
 }));
 
+
+const randomSecret = crypto.randomBytes(64).toString('hex');
+
+//randomSecretになってしまってないか、確認する必要がある
+//.envに設定したものを使う
+app.use(session({
+  secret: process.env.SESSION_SECRET || randomSecret,
+  resave: false, 
+  saveUninitialized: true,
+  cookie: { 
+    secure: false,
+    maxAge: 60 * 60 * 1000 // 1時間でデータがなくなる
+  }
+}));
 
 
 app.use('/', indexRouter);
