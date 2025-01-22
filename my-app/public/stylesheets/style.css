@@ -168,10 +168,15 @@ input[type="file"].up:valid::after {
 }
 button{
   border-style:groove;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
+  
   width: 50%;
   margin-bottom: 5vh;
+}
+
+button:disabled{
+  background-color: black;
 }
 
 div.explain{
@@ -192,8 +197,6 @@ div.explain2{
   color: white;
 
 }
-
-
 
 
 /* 

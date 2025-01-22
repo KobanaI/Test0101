@@ -15,8 +15,9 @@ block content
           input(type="hidden" name="_csrf" value!=csrfToken)
 
         div(class="form-group")
-          button(type="submit",class="up" id="uploadButton")
+          button(type="submit",class="up" id="uploadButton" onsubmit="return showLoading()")
             h2 送信
+
       div(class="explain2")
 
         p ※ グリッチアート,ホラー画像が出てくる可能性があります。
